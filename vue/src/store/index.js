@@ -74,7 +74,7 @@ const tmpSurveys = [
                 }
             },
             {
-                id: 2,
+                id: 3,
                 type: "checkbox",
                 question: "From which district you are?",
                 description: "describe your district here.",
@@ -104,7 +104,7 @@ const tmpSurveys = [
                 }
             },
             {
-                id: 3,
+                id: 4,
                 type: "checkbox",
                 question: "Which stack you like most?",
                 description: "describe your stack here.",
@@ -130,7 +130,7 @@ const tmpSurveys = [
                 }
             },
             {
-                id: 4,
+                id: 5,
                 type: "radio",
                 question: "Which programming language you love most?",
                 description: "describe your programming laguage here.",
@@ -160,20 +160,21 @@ const tmpSurveys = [
                 }
             },
             {
-                id: 5,
+                id: 6,
                 type: "text",
                 question: "whats your favourite food?",
                 description: null,
                 data: {}
             },
             {
-                id: 6,
+                id: 7,
                 type: "text",
                 question: "whats your favourite movei?",
                 description: null,
                 data: {}
             },
         ],
+
     },
     {
         id: 200,

@@ -130,6 +130,7 @@ import QuestionEditor from "../components/editor/QuestionEditor.vue";
 import {ref} from "vue";
 import store from "../store";
 import {useRoute} from "vue-router";
+import { v4 as uuidv4 } from "uuid";
 
 const route = useRoute();
 
@@ -147,5 +148,31 @@ if (route.params.id) {
     model.value = store.state.surveys.find(
         (s) => s.id === parseInt(route.params.id)
     );
+}
+
+function addQuestion(index) {
+    const newQuestion = {
+      id: uuidv4(),
+      type: "text",
+        question: "",
+        description: null,
+        data: {}
+    };
+    model.value.questions.splice(index,0, newQuestion);
+}
+
+function deleteQuestion(question) {
+    model.value.questions = model.value.questions.filter(
+        (q) => q !== question
+    );
+}
+
+function questionChange(question) {
+    model.value.questions = model.value.questions.map((q) => {
+        if(q.id === question.id) {
+            return JSON.parse(JSON.stringify(question))
+        }
+        return q;
+    });
 }
 </script>

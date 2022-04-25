@@ -224,6 +224,7 @@ function questionChange(question) {
 
 function saveSurvey() {
     store.dispatch("saveSurvey", { ...model.value }).then(() => {
+        store.dispatch('getSurveys')
        router.push({
            name: "Survey"
        });

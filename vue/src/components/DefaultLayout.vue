@@ -82,6 +82,7 @@
         </Disclosure>
 
        <router-view></router-view>
+        <Notification />
     </div>
 </template>
 
@@ -91,6 +92,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import {useStore} from "vuex";
 import {computed} from "vue";
 import {useRouter} from "vue-router";
+import Notification from "./Notification";
 
 const navigation = [
     { name: "Dashboard", to: { name: "Dashboard" } },
@@ -99,6 +101,7 @@ const navigation = [
 
 export default {
     components: {
+        Notification,
         Disclosure,
         DisclosureButton,
         DisclosurePanel,

@@ -1,10 +1,10 @@
 <template>
     <div
-        v-if="notification.show"
+        v-if="notificaton.show"
         class="fixed w-[300px] left-4 bottom-4 py-2 px-4 text-white animate-fade-in-down"
-        :class="[notification.type === 'success' ? 'bg-emerald-500' : 'bg-red-500']"
+        :class="[notificaton.type === 'success' ? 'bg-emerald-500' : 'bg-red-500']"
     >
-        {{ notification.message }}
+        {{ notificaton.message }}
     </div>
 </template>
 

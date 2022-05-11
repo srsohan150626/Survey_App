@@ -92,7 +92,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import {useStore} from "vuex";
 import {computed} from "vue";
 import {useRouter} from "vue-router";
-import Notification from "./Notification";
+import Notification from "./Notification.vue";
 
 const navigation = [
     { name: "Dashboard", to: { name: "Dashboard" } },

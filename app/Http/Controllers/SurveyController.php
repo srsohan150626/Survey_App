@@ -12,10 +12,13 @@ use App\Models\SurveyQuestion;
 use App\Models\SurveyQuestionAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Nette\Utils\DateTime;
 
 class SurveyController extends Controller
 {
@@ -173,6 +176,7 @@ class SurveyController extends Controller
             }
 
             $data = [
+                'survey_id' => $survey->id,
                 'survey_question_id' => $questionId,
                 'survey_answer_id' => $surveyAnswer->id,
                 'answer' => is_array($answer) ? json_encode($answer) : $answer
@@ -183,6 +187,36 @@ class SurveyController extends Controller
 
         return response("", 201);
 
+    }
+
+    public function surveyAnswer(Request $request, $surveyID)
+    {
+        $result = [];
+        $result_question_answers = [];
+        $question_answers = Survey::query()->with('questionsAnswers')
+                            ->where('user_id', $request->user()->id)
+                            ->where('id', $surveyID)
+                            ->first();
+
+        $result['id'] = $question_answers->id;
+        $result['title'] = $question_answers->title;
+        $result['description'] = $question_answers->description;
+        $result['slug'] = $question_answers->slug;
+        $result['created_at'] = (new DateTime($question_answers->created_at))->format('Y-m-d H:i:s');
+        $result['expire_date'] = (new DateTime($question_answers->expire_date))->format('Y-m-d H:i:s');
+        $result['image'] = $question_answers->image ? URL::to($question_answers->image) : null;
+
+        foreach ($question_answers->questionsAnswers as $key=> $item)
+        {
+            $question = DB::table('survey_questions')->where('id', $item->survey_question_id)
+                        ->select('question')->first();
+            $result_question_answers[$key]['id'] = $item->id;
+            $result_question_answers[$key]['question'] = $question->question;
+            $result_question_answers[$key]['answer'] = $item->answer;
+        }
+        $result['question_answers'] = $result_question_answers;
+
+        return $result;
     }
 
     /**

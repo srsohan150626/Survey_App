@@ -25,6 +25,10 @@ const store = createStore({
         show: false,
           type: null,
           message: null
+      },
+      surveyAnswers: {
+        loading: false,
+          data: []
       }
   },
   getters: {},
@@ -68,6 +72,19 @@ const store = createStore({
               .catch((err) => {
                   commit("setCurrentSurveyLoading", false);
                   throw err;
+              });
+      },
+      getSurveyById({commit}, id) {
+          commit("setSurveyAnswerLoading", true);
+          return axiosClient
+              .get(`/survey/${id}/answer`)
+              .then((res) => {
+                  commit("setSurveyAnswer", res.data);
+                  commit("setSurveyAnswerLoading", false);
+                  return res;
+              })
+              .catch((err) => {
+                  commit("setSurveyAnswerLoading", false);
               });
       },
       saveSurvey({ commit }, survey) {
@@ -162,6 +179,12 @@ const store = createStore({
       },
       setDashboardData: (state, dashboardData) => {
           state.dashboard.data = dashboardData;
+      },
+      setSurveyAnswerLoading: (state, loading) => {
+          state.surveyAnswers.loading = loading;
+      },
+      setSurveyAnswer: (state, resp) => {
+          state.surveyAnswers.data = resp;
       }
 
 

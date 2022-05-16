@@ -112,12 +112,12 @@
                 <div class="flex justify-between items-center mb-3 px-2">
                     <h3 class="text-2xl font-semibold">Latest Answers</h3>
 
-                    <a
+                    <router-link :to="{ name: 'SurveysAnswers'}"
                         href="javascript:void(0)"
                         class="text-sm text-blue-500 hover:decoration-blue-500"
                     >
                         View all
-                    </a>
+                    </router-link>
                 </div>
 
                 <div v-if="data.latest_five_answer.length">
@@ -127,7 +127,10 @@
                         :key="answer.id"
                         class="block p-2 hover:bg-gray-100/90"
                     >
-                        <div class="font-semibold">{{ answer.survey.title }}</div>
+                        <router-link :to="{ name: 'SurveyAnswerView', params: { id: answer.survey.id } }">
+                            <div class="font-semibold">{{ answer.survey.title }}</div>
+                        </router-link>
+
                         <small>
                             Answer Made at:
                             <i class="font-semibold">{{ answer.end_date }}</i>

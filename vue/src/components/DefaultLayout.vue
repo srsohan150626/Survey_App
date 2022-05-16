@@ -110,6 +110,7 @@ import Notification from "./Notification.vue";
 const navigation = [
     { name: "Dashboard", to: { name: "Dashboard" } },
     { name: "Survey", to: { name: "Survey" } },
+    { name: "SurveysAnswers", to: { name: "SurveysAnswers" } },
 ];
 
 export default {

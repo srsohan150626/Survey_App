@@ -38,4 +38,18 @@ class DashboardController extends Controller
           'latest_five_answer' => SurveyAnswerResource::collection($latest_five_answer)
         ];
     }
+
+    public function surveysAnswers(Request $request)
+    {
+        $user = $request->user();
+        $surveys_answers = SurveyAnswer::query()
+            ->join('surveys', 'surveys.id','survey_answers.survey_id')
+            ->where('surveys.user_id', $user->id)
+            ->latest('end_date')
+            ->getModels('survey_answers.*');
+        return [
+          'surveys_answers' => SurveyAnswerResource::collection($surveys_answers)
+        ];
+
+    }
 }

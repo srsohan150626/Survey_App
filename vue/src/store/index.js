@@ -29,6 +29,10 @@ const store = createStore({
       surveyAnswers: {
         loading: false,
           data: []
+      },
+      surveysAnswers: {
+          loading: false,
+          data: []
       }
   },
   getters: {},
@@ -120,6 +124,19 @@ const store = createStore({
       saveSurveyAnswer({commit}, {surveyId, answers}) {
           return axiosClient.post(`/survey/${surveyId}/answer`, {answers});
       },
+      getSurveysAnswersData({commit}) {
+          commit('surveysAnswersLoading', true)
+          return axiosClient.get(`/surveys/answers`)
+              .then((res) => {
+                  commit('surveysAnswersLoading', false)
+                  commit('setSurveysAnswersData', res.data)
+                  return res
+              })
+              .catch(error => {
+                  commit('surveysAnswersLoading', false)
+                  return error
+              })
+      },
       register({commit}, user) {
           return axiosClient.post('/register', user)
               .then(({data}) => {
@@ -185,8 +202,13 @@ const store = createStore({
       },
       setSurveyAnswer: (state, resp) => {
           state.surveyAnswers.data = resp;
+      },
+      surveysAnswersLoading: (state, loading) => {
+        state.surveysAnswers.loading = loading;
+      },
+      setSurveysAnswersData: (state, SurveysAnswersData) => {
+          state.surveysAnswers.data = SurveysAnswersData;
       }
-
 
   },
   modules: {}
